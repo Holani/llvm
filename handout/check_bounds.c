@@ -14,7 +14,7 @@ void check_bounds(long int size, long int index, long int line, char filename[])
 
   if(index >= size)
   {
-    printf("%s:%i: Array Out of Bounds Error.\n", filename,line);
+    printf("%s:%ld: Array Out of Bounds Error.\n", filename,line);
   }
   
   return;
