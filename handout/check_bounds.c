@@ -7,7 +7,10 @@
 ** occurs. If the access is out of bounds, then the function prints an
 ** error message.
 ***/
-void check_bounds() {
+void check_bounds(long int size, long int index, long int line, char filename[]) {
   printf("Out-of-Bounds Checking...\n");
+
+  // print variables
+  printf("array size: %i\n, index: %i\n, line: %i\n, filename: %s\n", size, index, line, filename);
   return;
 }
