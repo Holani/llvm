@@ -27,7 +27,7 @@ bool Instrument::runOnFunction(Module &M, Function &F) {
        	** Reimplement the following if-condition statement to check
        	** for the instructions of interest (array accesses).
        	***/
-      	errs() << "  Instruction: " << *inst << "\n";
+      	//errs() << "  Instruction: " << *inst << "\n";
       
       	if (GetElementPtrInst *GEPInst = dyn_cast<GetElementPtrInst>(inst))
 	  	{
@@ -64,15 +64,16 @@ bool Instrument::runOnFunction(Module &M, Function &F) {
 
 		 	//getting filename
 
-			StringRef fileName = F.getParent()->getName();
+			const DebugLoc &location = inst->getDebugLoc();
+			const DILocation *test =location.get();
+			StringRef fileName = test->getFilename();
 			Value *fn = builder.CreateGlobalStringPtr(fileName);
-			// errs() << fileName << " || " << *fn << "\n\n";
-
-			const llvm::DebugLoc &debugInfo = inst->getDebugLoc();
 
 			//getting linenumber
+			const llvm::DebugLoc &debugInfo = inst->getDebugLoc();
 			int line = debugInfo->getLine();
 			Constant *ln = ConstantInt::get(int_, line);
+
 
 			// errs() << "line: " << ln << "\n\n";
 	
