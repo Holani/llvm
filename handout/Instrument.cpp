@@ -27,7 +27,13 @@ bool Instrument::runOnFunction(Module &M, Function &F) {
        ** for the instructions of interest (array accesses).
        ***/
 
-      if (inst&&0) {
+       errs() << "  Instruction:   " << *inst << "\n";
+
+      if (GetElementPtrInst *GEPInst = dyn_cast<GetElementPtrInst>(inst))
+		   {
+			    errs() << "  Inside first  if  " << *GEPInst << "\n";
+			 
+			   
 
 	/* Use the following to print the instruction to instrument for debugging purposes. */
 	// errs() << "  Instruction: " << *inst << "\n";
