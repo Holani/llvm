@@ -40,8 +40,15 @@ bool Instrument::runOnFunction(Module &M, Function &F) {
 
 	Type *T = cast<PointerType>(cast<GetElementPtrInst>(inst)->getPointerOperandType())->getElementType();
 	int no_of_elements = cast<ArrayType>(T)->getNumElements();
+
+	LLVMContext& context = F.getContext();
+	// LLVMContext& context;
+	IRBuilder<> builder(inst);
 	// Type *Ty = cast<ArrayType>(T)->getElementType();
-	Value *size = dyn_cast<GetElementPtrInst>(inst)->getOperand(1);
+	// Value *size = dyn_cast<GetElementPtrInst>(inst)->getOperand(1);
+
+	llvm::Type *int_ = llvm::IntegerType::getInt64Ty(context);
+	Constant *size = ConstantInt::get(int_, no_of_elements);
 	// errs() << no_of_elements << "\n" << size << "\n\n";
 
 	// Value *array_size = dyn_cast<Value*>(no_of_elements);
@@ -69,9 +76,6 @@ bool Instrument::runOnFunction(Module &M, Function &F) {
 
 	StringRef fileName = F.getParent()->getName();
 	// Value *fn = cast<PointerType>(cast<Value>(fileName));
-	LLVMContext& context = F.getContext();
-	// LLVMContext& context;
-	IRBuilder<> builder(inst);
 
 	// Value *fn = builder.CreateGlobalString(fileName, "", 0, F.getParent());
 	Value *fn = builder.CreateGlobalStringPtr(fileName);
@@ -82,7 +86,7 @@ bool Instrument::runOnFunction(Module &M, Function &F) {
 	const llvm::DebugLoc &debugInfo = inst->getDebugLoc();
 	int line = debugInfo->getLine();
 	// Type *int_type = Type::getInt8Ty(F.getContext());
-	llvm::Type *int_ = llvm::IntegerType::getInt64Ty(context);
+	// llvm::Type *int_ = llvm::IntegerType::getInt64Ty(context);
 	Constant *ln = ConstantInt::get(int_, line);
 
 	// errs() << "line: " << ln << "\n\n";
