@@ -1,4 +1,5 @@
 #include "Instrument.hpp"
+#include <iostream>
 
 bool Instrument::doInitialization(Module &M __attribute__((unused))) {
   return false;
@@ -31,7 +32,8 @@ bool Instrument::runOnFunction(Module &M, Function &F) {
       
       	if (GetElementPtrInst *GEPInst = dyn_cast<GetElementPtrInst>(inst))
 	  	{
-			errs() << "GEP instruction:" << *GEPInst << "\n";
+			// errs() << "GEP instruction:" << *GEPInst << "\n";
+	  		std::cout << GEPInst;
 
 			/* Use the following to print the instruction to instrument for debugging purposes. */
 			// errs() << "  Instruction: " << *inst << "\n";
